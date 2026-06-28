@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Heritage Legacy Presentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#1a0d00;font-family:'EB Garamond',serif;overflow:hidden;width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;}
+
+/* Slide container */
+#stage{width:100%;height:100%;max-width:calc(100vh * 4/3);position:relative;display:flex;align-items:center;justify-content:center;}
+.slide{position:absolute;width:100%;height:100%;display:flex;flex-direction:column;transition:transform 0.6s cubic-bezier(.4,0,.2,1),opacity 0.6s;opacity:0;pointer-events:none;transform:translateX(100%);}
+.slide.active{opacity:1;pointer-events:auto;transform:translateX(0);}
+.slide.prev{transform:translateX(-100%);opacity:0;}
+
+/* Slide backgrounds */
+.slide-light{background:#F5EDDA;}
+.slide-dark{background:#2A1400;}
+
+/* Slide inner */
+.si{flex:1;position:relative;overflow:hidden;padding:2.5% 4%;}
+
+/* Corners */
+.si::before,.si::after,.cb,.cr{content:'';position:absolute;width:3%;height:4%;border-color:#C8913A;border-style:solid;opacity:0.6;z-index:10;}
+.si::before{top:1.5%;left:1.5%;border-width:2px 0 0 2px;}
+.si::after{top:1.5%;right:1.5%;border-width:2px 2px 0 0;}
+.cb{bottom:8%;left:1.5%;border-width:0 0 2px 2px;}
+.cr{bottom:8%;right:1.5%;border-width:0 2px 2px 0;}
+
+/* Slide tag */
+.stag{position:absolute;top:1.8%;right:5%;font-family:'Cinzel',serif;font-size:clamp(6px,0.8vw,9px);letter-spacing:0.15em;color:#C8913A;opacity:0.7;z-index:10;}
+
+/* Footer */
+.ft{height:5%;background:rgba(92,26,26,0.9);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.ft span{font-family:'Cinzel',serif;font-size:clamp(6px,0.7vw,8px);letter-spacing:0.2em;color:#F5EDDA;opacity:0.85;}
+
+/* Typography */
+.t-super{font-family:'Cinzel',serif;font-size:clamp(7px,0.9vw,11px);letter-spacing:0.3em;color:#C8913A;text-align:center;text-transform:uppercase;}
+.t-display{font-family:'Cinzel Decorative',serif;color:#5C1A1A;text-align:center;line-height:1.1;}
+.t-display-lg{font-size:clamp(28px,5.5vw,56px);}
+.t-display-md{font-size:clamp(18px,3vw,28px);}
+.t-display-sm{font-size:clamp(16px,2.2vw,22px);}
+.t-display-cream{color:#F5EDDA;}
+.t-tagline{font-family:'EB Garamond',serif;font-style:italic;color:#C8913A;text-align:center;font-size:clamp(11px,1.5vw,17px);}
+.t-body{font-family:'EB Garamond',serif;font-size:clamp(10px,1.2vw,14px);color:#3D1A04;line-height:1.6;}
+.t-body-center{text-align:center;}
+.t-italic{font-style:italic;color:#5A3A08;}
+.t-label{font-family:'Cinzel',serif;font-size:clamp(6px,0.7vw,9px);letter-spacing:0.2em;color:#C8913A;text-transform:uppercase;}
+.t-warm{color:#5A3A08;}
+.t-cream{color:#F5EDDA;}
+.t-parchment{color:#F5EDDA;}
+.t-gold{color:#C8913A;}
+
+/* Dividers */
+.div-gold{height:1px;background:#C8913A;opacity:0.5;margin:0 auto;}
+.div-w60{width:60%;}
+.div-w40{width:40%;}
+.div-w20{width:20%;}
+
+/* Pills */
+.pill-row{display:flex;justify-content:center;gap:1%;flex-wrap:wrap;}
+.pill{font-family:'Cinzel',serif;font-size:clamp(7px,0.8vw,9px);letter-spacing:0.1em;color:#5A3A08;background:#FFF8E1;border:1px solid #C8913A;border-radius:20px;padding:0.4% 1.5%;}
+.pill-dark{background:rgba(200,145,58,0.12);color:#C8913A;}
+
+/* Cards */
+.trade-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1%;}
+.trade-card{background:#FBF5E8;border:1px solid rgba(200,145,58,0.35);border-radius:6px;padding:1.5% 1.8%;}
+.tc-name{font-family:'Cinzel',serif;font-size:clamp(9px,1.1vw,13px);font-weight:700;color:#5C1A1A;margin-bottom:2px;}
+.tc-career{font-family:'EB Garamond',serif;font-size:clamp(8px,0.9vw,11px);color:#3D1A04;margin-bottom:2px;}
+.tc-flavour{font-family:'EB Garamond',serif;font-style:italic;font-size:clamp(7px,0.85vw,10px);color:#C8913A;}
+
+.rules-grid{display:grid;grid-template-columns:1fr 1fr;gap:1%;}
+.rule-card{background:#FBF2EE;border:1px solid #D4A090;border-radius:6px;padding:1.5% 2%;}
+.rule-card.gold{background:#FFF8E1;border-color:#C8913A;}
+.rule-card.full{grid-column:1/-1;}
+.r-num{font-family:'Cinzel',serif;font-size:clamp(6px,0.7vw,8px);letter-spacing:0.2em;color:#C8913A;margin-bottom:3px;}
+.r-title{font-family:'EB Garamond',serif;font-size:clamp(11px,1.3vw,15px);font-weight:500;color:#3D1A04;margin-bottom:4px;}
+.r-desc{font-family:'EB Garamond',serif;font-size:clamp(9px,1vw,12px);color:#5A3A08;line-height:1.5;}
+
+/* Two column */
+.two-col{display:grid;grid-template-columns:1fr 1px 1fr;gap:2%;height:100%;}
+.col-div{background:rgba(200,145,58,0.3);}
+.col-h{font-family:'Cinzel Decorative',serif;font-size:clamp(13px,1.8vw,20px);color:#5C1A1A;margin-bottom:2px;}
+.col-sub{font-family:'EB Garamond',serif;font-style:italic;font-size:clamp(9px,1vw,12px);color:#C8913A;margin-bottom:8px;}
+
+.trad-row{display:flex;align-items:flex-start;gap:6px;margin-bottom:6px;}
+.trad-icon{width:24px;height:24px;min-width:24px;background:#F0E8D8;border:1px solid rgba(200,145,58,0.5);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:12px;color:#5C1A1A;}
+.trad-text{font-family:'EB Garamond',serif;font-size:clamp(9px,1vw,12px);color:#3D1A04;line-height:1.45;}
+
+.mus-box{border-radius:6px;padding:3% 4%;margin-bottom:6px;}
+.mus-p1{background:#FAF0E8;border:1px solid #D4A090;}
+.mus-p2{background:#FFF8E1;border:1px solid #C8913A;}
+.mus-label{font-family:'Cinzel',serif;font-size:clamp(6px,0.7vw,8px);letter-spacing:0.15em;color:#C8913A;margin-bottom:4px;}
+.mus-desc{font-family:'EB Garamond',serif;font-size:clamp(9px,1vw,12px);color:#3D1A04;line-height:1.45;}
+.almanac-cta{background:rgba(92,26,26,0.85);border-radius:6px;padding:3% 4%;text-align:center;font-family:'EB Garamond',serif;font-style:italic;font-size:clamp(9px,1vw,12px);color:#F5EDDA;line-height:1.45;margin-top:6px;}
+
+/* Badges */
+.badge-sect-label{display:flex;align-items:center;gap:8px;margin:8px 0 6px;}
+.bsl-pill{font-family:'Cinzel',serif;font-size:clamp(6px,0.7vw,8px);letter-spacing:0.12em;padding:3px 10px;border-radius:3px;white-space:nowrap;flex-shrink:0;}
+.bsl-free{background:rgba(61,122,61,0.1);border:1px solid rgba(61,122,61,0.4);color:#2E7D32;}
+.bsl-patron{background:#FFF8E1;border:1px solid rgba(200,145,58,0.5);color:#8B6000;}
+.bsl-line{flex:1;height:1px;background:rgba(200,145,58,0.25);}
+.bsl-note{font-family:'EB Garamond',serif;font-style:italic;font-size:clamp(8px,0.9vw,11px);color:#8B5E1A;white-space:nowrap;}
+
+.badges-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+.badge-item{display:flex;flex-direction:column;align-items:center;gap:3px;}
+.shield-wrap{position:relative;display:flex;align-items:center;justify-content:center;}
+.shield-bg{clip-path:polygon(50% 0%,100% 20%,100% 65%,50% 100%,0% 65%,0% 20%);position:absolute;inset:0;}
+.shield-fill{clip-path:polygon(50% 0%,100% 20%,100% 65%,50% 100%,0% 65%,0% 20%);position:absolute;top:3px;left:3px;right:3px;bottom:3px;display:flex;align-items:center;justify-content:center;padding-bottom:14%;}
+.badge-name{font-family:'Cinzel',serif;font-weight:700;text-align:center;line-height:1.3;font-size:clamp(6px,0.75vw,9px);color:#3D1A04;}
+.badge-name.gold{color:#5a3500;}
+.badge-tier{font-family:'EB Garamond',serif;font-style:italic;text-align:center;font-size:clamp(6px,0.7vw,8px);}
+.bt-free{color:#2E7D32;}
+.bt-patron{color:#8B6000;}
+.patron-tag{font-family:'EB Garamond',serif;font-style:italic;font-size:clamp(6px,0.65vw,8px);color:#8B6000;background:#FFF8D6;border:1px solid rgba(200,145,58,0.5);border-radius:20px;padding:1px 6px;}
+
+/* Patron slide */
+.patron-col-l,.patron-col-r{display:flex;flex-direction:column;justify-content:center;}
+.price-box{background:rgba(26,10,0,0.5);border:1px solid rgba(200,145,58,0.5);border-radius:6px;padding:4% 6%;text-align:center;margin-top:4%;}
+.price-amt{font-family:'Cinzel Decorative',serif;font-size:clamp(20px,3.5vw,36px);color:#FFD700;}
+.feat-row{display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;}
+.feat-bullet{width:20px;height:20px;min-width:20px;background:rgba(200,145,58,0.15);border:1px solid rgba(200,145,58,0.4);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#C8913A;margin-top:1px;}
+.feat-text{font-family:'EB Garamond',serif;font-size:clamp(9px,1.1vw,13px);color:#F5EDDA;line-height:1.5;}
+.feat-text strong{color:#C8913A;}
+
+/* CTA */
+.cta-box{background:#FAF4E8;border:2px solid #C8913A;border-radius:8px;padding:3% 6%;text-align:center;margin-top:3%;}
+.cta-url{font-family:'Cinzel Decorative',serif;font-size:clamp(14px,2.2vw,24px);color:#5C1A1A;}
+
+/* Navigation */
+#nav-prev,#nav-next{position:fixed;top:50%;transform:translateY(-50%);z-index:100;background:#C8913A;color:#2A1400;border:none;border-radius:50%;width:clamp(36px,4vw,52px);height:clamp(36px,4vw,52px);font-size:clamp(16px,2vw,24px);font-weight:bold;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform 0.2s,opacity 0.2s;box-shadow:0 4px 12px rgba(0,0,0,0.3);}
+#nav-prev{left:1%;}
+#nav-next{right:1%;}
+#nav-prev:hover,#nav-next:hover{transform:translateY(-50%) scale(1.1);}
+#nav-prev:disabled,#nav-next:disabled{opacity:0.3;cursor:default;}
+#counter{position:fixed;bottom:1.5%;left:50%;transform:translateX(-50%);font-family:'Cinzel',serif;font-size:clamp(8px,0.9vw,11px);letter-spacing:0.2em;color:#C8913A;z-index:100;}
+#hint{position:fixed;top:1%;right:1%;font-family:'Cinzel',serif;font-size:clamp(7px,0.75vw,9px);letter-spacing:0.1em;color:#C8913A;opacity:0.5;z-index:100;}
+
+/* Utilities */
+.flex{display:flex;}
+.flex-col{flex-direction:column;}
+.items-center{align-items:center;}
+.justify-center{justify-content:center;}
+.text-center{text-align:center;}
+.mb-1{margin-bottom:0.5%;}
+.mb-2{margin-bottom:1%;}
+.mb-3{margin-bottom:1.5%;}
+.mb-4{margin-bottom:2%;}
+.gap-2{gap:1%;}
+.h-full{height:100%;}
+.mt-auto{margin-top:auto;}
+.w-full{width:100%;}
+</style>
+</head>
+<body>
+
+<button id="nav-prev" onclick="changeSlide(-1)" disabled>‹</button>
+<button id="nav-next" onclick="changeSlide(1)">›</button>
+<div id="counter">SLIDE 1 OF 8</div>
+<div id="hint">← → or SPACE to navigate</div>
+
+<div id="stage">
+
+<!-- SLIDE 1: PINTEREST TITLE CARD -->
+<div class="slide slide-dark active" id="s1">
+  <div class="si" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:2%;">
+    <div class="cb"></div><div class="cr"></div>
+    <div class="t-super mb-2">A Sims 4 Legacy Challenge</div>
+    <div class="div-gold div-w20 mb-2"></div>
+    <div class="shield-wrap mb-3" style="width:clamp(50px,7vw,80px);height:clamp(58px,8vw,92px);">
+      <div class="shield-bg" style="background:#C8913A;"></div>
+      <div class="shield-fill" style="background:#1A0A00;">
+        <i class="ti ti-shield" style="font-size:clamp(18px,2.5vw,30px);color:#C8913A;"></i>
+      </div>
+    </div>
+    <div class="t-display t-display-lg t-display-cream mb-2">The<br>Heritage<br>Legacy</div>
+    <div class="div-gold div-w20 mb-2"></div>
+    <div class="t-tagline mb-3">A dynasty of trade, tradition &amp; enduring love</div>
+    <div class="pill-row mb-3">
+      <span class="pill pill-dark">5 generations</span>
+      <span class="pill pill-dark">wholesome gameplay</span>
+      <span class="pill pill-dark">family trade</span>
+      <span class="pill pill-dark">heirlooms</span>
+    </div>
+    <div style="background:rgba(26,10,0,0.6);border:1px solid rgba(200,145,58,0.5);border-radius:4px;padding:2% 6%;text-align:center;">
+      <div class="t-label mb-1">Track your dynasty in the</div>
+      <div style="font-family:'Cinzel Decorative',serif;font-size:clamp(11px,1.5vw,16px);color:#F5EDDA;">Legacy Challenge Almanac</div>
+    </div>
+    <div style="font-family:'EB Garamond',serif;font-style:italic;font-size:clamp(9px,1vw,12px);color:#6B4A20;margin-top:1%;">by ZombieLis</div>
+  </div>
+  <div class="ft"><span>THE OFFICIAL CHALLENGE OF THE LEGACY CHALLENGE ALMANAC</span></div>
+</div>
+
+<!-- SLIDE 2: OPENING TITLE -->
+<div class="slide slide-light" id="s2">
+  <div class="si" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:1.5%;">
+    <div class="cb"></div><div class="cr"></div>
+    <span class="stag">THE HERITAGE LEGACY</span>
+    <div class="t-super mb-1">A Sims 4 Legacy Challenge by ZombieLis</div>
+    <div class="div-gold" style="width:80px;"></div>
+    <div class="t-display t-display-lg mb-2" style="margin-top:1%;">The Heritage Legacy</div>
+    <div class="t-tagline mb-2">A dynasty of trade, tradition &amp; enduring love</div>
+    <div class="div-gold div-w60 mb-1"></div>
+    <div class="div-gold div-w40 mb-2"></div>
+    <p class="t-body t-body-center t-italic mb-3">Your founder arrives with a trade, a name, and a dream.<br>Build not just a home — but a dynasty.</p>
+    <div class="pill-row">
+      <span class="pill">5 GENERATIONS</span>
+      <span class="pill">WHOLESOME PLAY</span>
+      <span class="pill">FAMILY TRADE</span>
+      <span class="pill">HEIRLOOMS</span>
+    </div>
+  </div>
+  <div class="ft"><span>THE OFFICIAL CHALLENGE OF THE LEGACY CHALLENGE ALMANAC</span></div>
+</div>
+
+<!-- SLIDE 3: CHOOSE YOUR TRADE -->
+<div class="slide slide-light" id="s3">
+  <div class="si" style="display:flex;flex-direction:column;padding:3% 4% 1%;">
+    <div class="cb"></div><div class="cr"></div>
+    <span class="stag">THE HERITAGE LEGACY</span>
+    <div class="text-center mb-2">
+      <div class="t-display t-display-sm mb-1">Choose Your Trade</div>
+      <div class="t-tagline" style="font-size:clamp(10px,1.1vw,13px);">Your career becomes your surname. Your surname becomes your legacy.</div>
+      <div class="div-gold" style="width:60px;margin:6px auto;"></div>
+    </div>
+    <div class="trade-grid" style="flex:1;align-content:start;gap:0.8%;">
+      <div class="trade-card"><div class="tc-name">The Bakers</div><div class="tc-career">Culinary · Chef</div><div class="tc-flavour">The baking dynasty 🍞</div></div>
+      <div class="trade-card"><div class="tc-name">The Painters</div><div class="tc-career">Painter · Master of the Real</div><div class="tc-flavour">The artist dynasty 🎨</div></div>
+      <div class="trade-card"><div class="tc-name">The Scribes</div><div class="tc-career">Writer · Author</div><div class="tc-flavour">The storytelling dynasty 📖</div></div>
+      <div class="trade-card"><div class="tc-name">The Fishers</div><div class="tc-career">Fisherman · Island Living</div><div class="tc-flavour">The coastal dynasty 🎣</div></div>
+      <div class="trade-card"><div class="tc-name">The Gardeners</div><div class="tc-career">Gardener · Botanist</div><div class="tc-flavour">The botanical dynasty 🌿</div></div>
+      <div class="trade-card"><div class="tc-name">The Nobles</div><div class="tc-career">Noble · Royalty &amp; Legacy</div><div class="tc-flavour">The aristocratic dynasty 👑</div></div>
+      <div class="trade-card"><div class="tc-name">The Lawsons</div><div class="tc-career">Law · Judge or Attorney</div><div class="tc-flavour">The legal dynasty ⚖️</div></div>
+      <div class="trade-card"><div class="tc-name">The Greenes</div><div class="tc-career">Conservationist · Eco Lifestyle</div><div class="tc-flavour">The environmental dynasty 🌍</div></div>
+      <div class="trade-card"><div class="tc-name">The Hartleys</div><div class="tc-career">Doctor · Get To Work</div><div class="tc-flavour">The healing dynasty 🏥</div></div>
+      <div class="trade-card"><div class="tc-name">The Sterlings</div><div class="tc-career">Business · Investor</div><div class="tc-flavour">The merchant dynasty 💼</div></div>
+      <div class="trade-card"><div class="tc-name">The Reeves</div><div class="tc-career">Politician · City Living</div><div class="tc-flavour">The civic dynasty 🏛️</div></div>
+      <div class="trade-card"><div class="tc-name">The Mercers</div><div class="tc-career">Style Influencer · Stylist</div><div class="tc-flavour">The fashion dynasty ✂️</div></div>
+    </div>
+    <div style="background:#FFF8E1;border:1px solid rgba(200,145,58,0.35);border-radius:4px;padding:1% 2%;text-align:center;margin-top:1%;">
+      <span class="t-body t-italic" style="font-size:clamp(9px,1vw,12px);">Any Sims 4 career works — these are just inspiration. Make it yours! 🏡</span>
+    </div>
+  </div>
+  <div class="ft"><span>THE OFFICIAL CHALLENGE OF THE LEGACY CHALLENGE ALMANAC</span></div>
+</div>
+
+<!-- SLIDE 4: FIVE CORE RULES -->
+<div class="slide slide-light" id="s4">
+  <div class="si" style="display:flex;flex-direction:column;padding:3% 4% 1%;">
+    <div class="cb"></div><div class="cr"></div>
+    <span class="stag">THE HERITAGE LEGACY</span>
+    <div class="text-center mb-2">
+      <div class="t-display t-display-sm mb-1">The Five Core Rules</div>
+      <div class="div-gold" style="width:60px;margin:0 auto;"></div>
+    </div>
+    <div class="rules-grid" style="flex:1;gap:0.8%;align-content:start;">
+      <div class="rule-card"><div class="r-num">RULE I</div><div class="r-title">The Family Name</div><div class="r-desc">Your trade becomes your surname. Bakers. Fletchers. Coopers. This name never changes — regardless of heir gender.</div></div>
+      <div class="rule-card"><div class="r-num">RULE II</div><div class="r-title">The Family Trade</div><div class="r-desc">Every heir must follow the founder's career. Start as an apprentice or market stall seller in Gen 1. Own a family business by Gen 5.</div></div>
+      <div class="rule-card"><div class="r-num">RULE III</div><div class="r-title">The Trade Heir Rule</div><div class="r-desc">The heir is never born — they earn it. The child who shows the greatest aptitude and passion for the family trade inherits everything.</div></div>
+      <div class="rule-card"><div class="r-num">RULE IV</div><div class="r-title">The Family Home</div><div class="r-desc">Start on the largest lot with §30,000. Empty lot only. Never move. Never sell. Watch a humble beginning grow into a grand estate.</div></div>
+      <div class="rule-card gold full" style="margin-top:0.8%;"><div class="r-num">RULE V</div><div class="r-title">The Heirloom Rule</div><div class="r-desc">The founder creates one heirloom tied to their trade — never sold. Each heir adds their own. Every heir keeps a personal journal from childhood, written at least once per in-game week. Journals are passed down and eventually housed in the Family Museum.</div></div>
+    </div>
+  </div>
+  <div class="ft"><span>THE OFFICIAL CHALLENGE OF THE LEGACY CHALLENGE ALMANAC</span></div>
+</div>
+
+<!-- SLIDE 5: TRADITIONS & MUSEUM -->
+<div class="slide slide-light" id="s5">
+  <div class="si" style="padding:3% 4% 1%;">
+    <div class="cb"></div><div class="cr"></div>
+    <span class="stag">THE HERITAGE LEGACY</span>
+    <div class="two-col h-full">
+      <div style="display:flex;flex-direction:column;">
+        <div class="col-h">Heritage Traditions</div>
+        <div class="col-sub">Observed by every generation, without exception.</div>
+        <div class="trad-row"><div class="trad-icon"><i class="ti ti-photo"></i></div><div class="trad-text"><strong>Annual Family Portrait</strong> — Photo + painted heir portrait every in-game year</div></div>
+        <div class="trad-row"><div class="trad-icon"><i class="ti ti-candle"></i></div><div class="trad-text"><strong>Remembrance Day</strong> — Visit all family graves once per in-game year</div></div>
+        <div class="trad-row"><div class="trad-icon"><i class="ti ti-confetti"></i></div><div class="trad-text"><strong>Celebrations</strong> — All birthdays, holidays &amp; funerals with family present</div></div>
+        <div class="trad-row"><div class="trad-icon"><i class="ti ti-mail"></i></div><div class="trad-text"><strong>Letter to the Next Heir</strong> — Written before each elder passes</div></div>
+        <div class="trad-row"><div class="trad-icon" style="color:#C8913A;"><i class="ti ti-sparkles"></i></div><div class="trad-text"><strong>Your Family Tradition</strong> — Player-chosen. Roll the generator in the Almanac!</div></div>
+        <div class="almanac-cta mt-auto">📖 Keep the Family Chronicle in the Legacy Challenge Almanac</div>
+      </div>
+      <div class="col-div"></div>
+      <div style="display:flex;flex-direction:column;">
+        <div class="col-h">The Family Museum</div>
+        <div class="col-sub">Your legacy made physical.</div>
+        <div class="mus-box mus-p1"><div class="mus-label">GENS 1–3 · THE HERITAGE ROOM</div><div class="mus-desc">One dedicated room in the family home. Heir portraits, heirlooms and journals displayed with intention. Visitors should understand the family's history at a glance.</div></div>
+        <div class="mus-box mus-p2"><div class="mus-label">GENS 4–5 · THE FAMILY MUSEUM</div><div class="mus-desc">Expands to a community lot open to the neighbourhood. Houses every heir portrait, all heirlooms, family journals, the Family Chronicle, and all dynasty achievements.<br><br><em>The museum is your legacy made physical.</em></div></div>
+        <div class="almanac-cta mt-auto">Track every heirloom, portrait &amp; tradition<br>in the Legacy Challenge Almanac 📖</div>
+      </div>
+    </div>
+  </div>
+  <div class="ft"><span>THE OFFICIAL CHALLENGE OF THE LEGACY CHALLENGE ALMANAC</span></div>
+</div>
+
+<!-- SLIDE 6: ACHIEVEMENT BADGES -->
+<div class="slide slide-light" id="s6">
+  <div class="si" style="display:flex;flex-direction:column;padding:2.5% 4% 1%;">
+    <div class="cb"></div><div class="cr"></div>
+    <span class="stag">THE HERITAGE LEGACY</span>
+    <div class="text-center mb-1">
+      <div class="t-display t-display-sm mb-1">Heritage Achievements</div>
+      <div class="t-tagline" style="font-size:clamp(10px,1.1vw,13px);">Earn them. Display them. Share them with the community.</div>
+      <div class="div-gold" style="width:60px;margin:6px auto;"></div>
+    </div>
+    <!-- Free -->
+    <div class="badge-sect-label">
+      <span class="bsl-pill bsl-free">FREE</span>
+      <div class="bsl-line"></div>
+      <span class="bsl-note">Available in the 5-generation challenge</span>
+    </div>
+    <div class="badges-row mb-2">
+      <div class="badge-item">
+        <div class="shield-wrap" style="width:clamp(55px,7vw,78px);height:clamp(63px,8vw,90px);">
+          <div class="shield-bg" style="background:#C8913A;"></div>
+          <div class="shield-fill" style="background:#EDF6F0;"><i class="ti ti-diamond" style="font-size:clamp(16px,2.2vw,24px);color:#3d7a3d;"></i></div>
+        </div>
+        <div class="badge-name">Heirloom<br>Keeper</div><div class="badge-tier bt-free">Free</div>
+      </div>
+      <div class="badge-item">
+        <div class="shield-wrap" style="width:clamp(55px,7vw,78px);height:clamp(63px,8vw,90px);">
+          <div class="shield-bg" style="background:#C8913A;"></div>
+          <div class="shield-fill" style="background:#FDF0E8;"><i class="ti ti-home-heart" style="font-size:clamp(16px,2.2vw,24px);color:#8B3A1A;"></i></div>
+        </div>
+        <div class="badge-name">The Forever<br>Home</div><div class="badge-tier bt-free">Free</div>
+      </div>
+      <div class="badge-item">
+        <div class="shield-wrap" style="width:clamp(55px,7vw,78px);height:clamp(63px,8vw,90px);">
+          <div class="shield-bg" style="background:#C8913A;"></div>
+          <div class="shield-fill" style="background:#EEE8F8;"><i class="ti ti-candle" style="font-size:clamp(16px,2.2vw,24px);color:#5C3A8B;"></i></div>
+        </div>
+        <div class="badge-name">Remembrance<br>Keeper</div><div class="badge-tier bt-free">Free</div>
+      </div>
+      <div class="badge-item">
+        <div class="shield-wrap" style="width:clamp(55px,7vw,78px);height:clamp(63px,8vw,90px);">
+          <div class="shield-bg" style="background:#C8913A;"></div>
+          <div class="shield-fill" style="background:#FEF9EC;"><i class="ti ti-photo" style="font-size:clamp(16px,2.2vw,24px);color:#8B6000;"></i></div>
+        </div>
+        <div class="badge-name">Portrait<br>Dynasty</div><div class="badge-tier bt-free">Free</div>
+      </div>
+    </div>
+    <!-- Patron -->
+    <div class="badge-sect-label">
+      <span class="bsl-pill bsl-patron">PATRON</span>
+      <div class="bsl-line"></div>
+      <span class="bsl-note">Unlocked with the 10-generation Patron Edition</span>
+    </div>
+    <div class="badges-row">
+      <div class="badge-item">
+        <div class="shield-wrap" style="width:clamp(48px,6vw,68px);height:clamp(55px,7vw,78px);">
+          <div class="shield-bg" style="background:#D4A017;"></div>
+          <div class="shield-fill" style="background:#FFFBE6;"><i class="ti ti-building-monument" style="font-size:clamp(14px,1.8vw,20px);color:#8B6000;"></i></div>
+        </div>
+        <div class="badge-name gold">Grand<br>Custodian</div><div class="badge-tier bt-patron">Patron</div>
+      </div>
+      <div class="badge-item">
+        <div class="shield-wrap" style="width:clamp(48px,6vw,68px);height:clamp(55px,7vw,78px);">
+          <div class="shield-bg" style="background:#D4A017;"></div>
+          <div class="shield-fill" style="background:#FFFBE6;"><i class="ti ti-link" style="font-size:clamp(14px,1.8vw,20px);color:#8B6000;"></i></div>
+        </div>
+        <div class="badge-name gold">Unbroken<br>Line</div><div class="badge-tier bt-patron">Patron</div>
+      </div>
+      <div class="badge-item">
+        <div class="shield-wrap" style="width:clamp(48px,6vw,68px);height:clamp(55px,7vw,78px);">
+          <div class="shield-bg" style="background:#D4A017;"></div>
+          <div class="shield-fill" style="background:#FFFBE6;"><i class="ti ti-star" style="font-size:clamp(14px,1.8vw,20px);color:#8B6000;"></i></div>
+        </div>
+        <div class="badge-name gold">Master of<br>the Trade</div><div class="badge-tier bt-patron">Patron</div>
+      </div>
+      <div class="badge-item">
+        <div class="shield-wrap" style="width:clamp(48px,6vw,68px);height:clamp(55px,7vw,78px);">
+          <div class="shield-bg" style="background:#D4A017;"></div>
+          <div class="shield-fill" style="background:#FFFBE6;"><i class="ti ti-users" style="font-size:clamp(14px,1.8vw,20px);color:#8B6000;"></i></div>
+        </div>
+        <div class="badge-name gold">Mentor's<br>Touch</div><div class="badge-tier bt-patron">Patron</div>
+      </div>
+      <div class="badge-item">
+        <div class="shield-wrap" style="width:clamp(48px,6vw,68px);height:clamp(55px,7vw,78px);">
+          <div class="shield-bg" style="background:#D4A017;"></div>
+          <div class="shield-fill" style="background:#FFFBE6;"><i class="ti ti-building-store" style="font-size:clamp(14px,1.8vw,20px);color:#8B6000;"></i></div>
+        </div>
+        <div class="badge-name gold">Family<br>Business</div><div class="badge-tier bt-patron">Patron</div>
+      </div>
+      <div class="badge-item">
+        <div class="shield-wrap" style="width:clamp(58px,7.5vw,84px);height:clamp(67px,8.5vw,97px);">
+          <div class="shield-bg" style="background:#FFD700;"></div>
+          <div class="shield-fill" style="background:#FFF8D6;"><i class="ti ti-crown" style="font-size:clamp(18px,2.3vw,26px);color:#5a3500;"></i></div>
+        </div>
+        <div class="badge-name gold" style="font-size:clamp(7px,0.85vw,10px);">Dynasty Royale</div>
+        <div class="badge-tier bt-patron">All badges earned</div>
+        <div class="patron-tag">Ultimate achievement</div>
+      </div>
+    </div>
+  </div>
+  <div class="ft"><span>THE OFFICIAL CHALLENGE OF THE LEGACY CHALLENGE ALMANAC</span></div>
+</div>
+
+<!-- SLIDE 7: PATRON EDITION -->
+<div class="slide slide-dark" id="s7">
+  <div class="si" style="padding:3% 4% 1%;">
+    <div class="cb"></div><div class="cr"></div>
+    <span class="stag" style="color:#C8913A;">THE HERITAGE LEGACY</span>
+    <div class="two-col h-full">
+      <div class="patron-col-l">
+        <div class="t-label mb-2">Want more Heritage?</div>
+        <div class="t-display t-display-md t-display-cream mb-2">The Patron<br>Edition</div>
+        <div class="div-gold" style="width:50%;margin-bottom:3%;"></div>
+        <div class="t-tagline mb-3" style="text-align:left;">Ten generations. A grander museum.<br>A portrait wall that spans a century.</div>
+        <div class="price-box">
+          <div class="t-label mb-1">One-time purchase</div>
+          <div class="price-amt">~$6 AUD</div>
+          <div class="t-tagline" style="font-size:clamp(9px,1vw,12px);margin-top:2px;">No subscriptions. No ongoing fees.</div>
+        </div>
+      </div>
+      <div class="col-div"></div>
+      <div class="patron-col-r">
+        <div class="t-label mb-3">Patron Edition includes</div>
+        <div class="feat-row"><div class="feat-bullet">✦</div><div class="feat-text"><strong>5 extra generation slots</strong> — Generations 6 through 10 unlocked in the Almanac</div></div>
+        <div class="feat-row"><div class="feat-bullet">✦</div><div class="feat-text"><strong>5 exclusive Patron badges</strong> — Including the coveted Dynasty Royale 👑</div></div>
+        <div class="feat-row"><div class="feat-bullet">✦</div><div class="feat-text"><strong>Random Tradition Generator</strong> — Roll a unique family tradition for your dynasty</div></div>
+        <div class="feat-row"><div class="feat-bullet">✦</div><div class="feat-text"><strong>All Patron Almanac features</strong> — Across every page of the tool</div></div>
+        <div class="t-tagline mt-auto" style="text-align:left;font-size:clamp(9px,1vw,12px);color:#8B5E1A;">The rules stay the same. The value of the Patron Edition is simply more Heritage. A longer story. A grander legacy.</div>
+      </div>
+    </div>
+  </div>
+  <div class="ft"><span>THE OFFICIAL CHALLENGE OF THE LEGACY CHALLENGE ALMANAC</span></div>
+</div>
+
+<!-- SLIDE 8: CTA -->
+<div class="slide slide-light" id="s8">
+  <div class="si" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:3% 8%;">
+    <div class="cb"></div><div class="cr"></div>
+    <div class="t-super mb-2">Your dynasty awaits</div>
+    <div class="t-display t-display-lg mb-2">Start Your<br>Heritage Legacy</div>
+    <div class="div-gold" style="width:80px;"></div>
+    <p class="t-body t-body-center t-italic mb-3" style="max-width:70%;margin-top:2%;">Download the Legacy Challenge Almanac — a free, beautiful tool built for Sims 4 legacy players. Track your family chronicle, heirlooms, portraits, journals and more. The Heritage Legacy is built right in and ready to play.</p>
+    <div class="cta-box" style="width:70%;">
+      <div class="t-label mb-1">Download free at</div>
+      <div class="cta-url">buymeacoffee.com/[yourname]</div>
+      <div class="t-tagline" style="font-size:clamp(9px,1vw,12px);margin-top:1%;">Patron Edition also available — one-time ~$6 AUD</div>
+    </div>
+    <div style="font-family:'Cinzel',serif;font-size:clamp(8px,0.9vw,11px);color:#5A3A08;letter-spacing:0.05em;margin-top:2%;">#HeritageLegacy &nbsp;·&nbsp; #LegacyChallengeAlmanac</div>
+  </div>
+  <div class="ft"><span>CREATED BY ZOMBIELIS · FREE TO PLAY · FREE TO SHARE</span></div>
+</div>
+
+</div><!-- end stage -->
+
+<script>
+let current = 0;
+const slides = document.querySelectorAll('.slide');
+const total = slides.length;
+
+function changeSlide(dir) {
+  slides[current].classList.remove('active');
+  slides[current].classList.toggle('prev', dir > 0);
+  current = Math.max(0, Math.min(total - 1, current + dir));
+  slides.forEach((s, i) => {
+    s.classList.remove('active', 'prev');
+    if (i < current) s.classList.add('prev');
+  });
+  slides[current].classList.add('active');
+  document.getElementById('counter').textContent = `SLIDE ${current + 1} OF ${total}`;
+  document.getElementById('nav-prev').disabled = current === 0;
+  document.getElementById('nav-next').disabled = current === total - 1;
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); if (current < total-1) changeSlide(1); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); if (current > 0) changeSlide(-1); }
+});
+</script>
+</body>
+</html>
