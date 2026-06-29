@@ -57,24 +57,24 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a0d00;}
 
 /* Trade grid */
 .trade-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(8px,1vw,14px);flex:1;align-content:center;}
-.tc{background:#FBF5E8;border:1px solid rgba(200,145,58,0.4);border-radius:6px;padding:clamp(10px,1.2vh,16px) clamp(12px,1.4vw,18px);}
+.tc{background:#FBF5E8;border:1px solid rgba(200,145,58,0.4);border-radius:6px;padding:clamp(10px,1.2vh,16px) clamp(12px,1.4vw,18px);display:flex;flex-direction:column;align-items:center;text-align:center;}
 .tc-n{font-family:'Cinzel',serif;font-size:clamp(12px,1.3vw,16px);font-weight:700;color:#5C1A1A;margin-bottom:3px;}
 .tc-c{font-family:'EB Garamond',serif;font-size:clamp(11px,1.1vw,14px);color:#3D1A04;margin-bottom:2px;}
 .tc-f{font-family:'EB Garamond',serif;font-style:italic;font-size:clamp(10px,1vw,13px);color:#C8913A;}
+.tc-icon{font-size:clamp(18px,2vw,26px);color:#C8913A;margin-bottom:5px;display:flex;justify-content:center;}
 .trade-note{background:#FFF8E1;border:1.5px solid #C8913A;border-radius:6px;padding:clamp(10px,1.2vh,16px) 20px;text-align:center;margin-top:clamp(10px,1.2vh,16px);font-family:'EB Garamond',serif;font-style:italic;font-size:clamp(13px,1.4vw,18px);color:#5C1A1A;font-weight:500;}
 
 /* Rules grid - coloured cards */
 .rules-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(8px,1vw,14px);flex:1;align-content:start;}
-.rc{border-radius:8px;padding:clamp(12px,1.5vh,20px) clamp(14px,1.5vw,22px);display:flex;gap:clamp(10px,1.2vw,16px);align-items:flex-start;}
+.rc{border-radius:8px;padding:clamp(12px,1.5vh,20px) clamp(14px,1.5vw,22px);display:flex;flex-direction:column;align-items:center;text-align:center;gap:clamp(6px,0.8vh,10px);}
 .rc.full{grid-column:1/-1;}
 .rc-r1{background:#FDF0E8;border:1.5px solid #D4956A;}
 .rc-r2{background:#E8F4F0;border:1.5px solid #6BA89A;}
 .rc-r3{background:#F0ECF8;border:1.5px solid #8B7ABE;}
 .rc-r4{background:#FDF5E0;border:1.5px solid #C8A84A;}
 .rc-r5{background:#F5EBE8;border:1.5px solid #C8736A;}
-.rc-emoji{font-size:clamp(28px,3.5vw,48px);line-height:1;flex-shrink:0;margin-top:2px;}
-.rc-content{flex:1;}
-.r-label{font-family:'Cinzel',serif;font-size:clamp(8px,0.8vw,10px);letter-spacing:0.2em;margin-bottom:4px;}
+.rc-content-old{flex:1;}
+.r-label{font-family:'Cinzel',serif;font-size:clamp(11px,1.1vw,14px);letter-spacing:0.2em;margin-bottom:3px;font-weight:600;}
 .rc-r1 .r-label{color:#B06030;}
 .rc-r2 .r-label{color:#2E7A65;}
 .rc-r3 .r-label{color:#5A4A9A;}
@@ -86,6 +86,14 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a0d00;}
 .rc-r3 .r-title{color:#3A2A7A;}
 .rc-r4 .r-title{color:#5A3800;}
 .rc-r5 .r-title{color:#7A2010;}
+.rc-emoji{display:flex;gap:6px;margin-bottom:2px;justify-content:center;}
+.rc-emoji i{font-size:clamp(16px,1.8vw,22px);}
+.rc-content{width:100%;}
+.rc-r1 .rc-emoji i{color:#B06030;}
+.rc-r2 .rc-emoji i{color:#2E7A65;}
+.rc-r3 .rc-emoji i{color:#5A4A9A;}
+.rc-r4 .rc-emoji i{color:#8B6A10;}
+.rc-r5 .rc-emoji i{color:#A04030;}
 .r-desc{font-family:'EB Garamond',serif;font-size:clamp(11px,1.1vw,14px);line-height:1.55;color:#3D1A04;}
 
 /* Two col */
@@ -129,6 +137,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a0d00;}
 .bt-free{color:#2E7D32;}
 .bt-patron{color:#8B6000;}
 .ptag{font-family:'EB Garamond',serif;font-style:italic;font-size:clamp(8px,0.8vw,10px);color:#8B6000;background:#FFF8D6;border:1px solid rgba(200,145,58,0.5);border-radius:20px;padding:2px 8px;}
+@keyframes royale-glow{0%,100%{opacity:0.7;transform:scale(1);}50%{opacity:1;transform:scale(1.08);}}
 
 /* Patron */
 .pat-l,.pat-r{display:flex;flex-direction:column;justify-content:center;}
@@ -149,7 +158,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a0d00;}
 #nn{right:clamp(8px,1vw,16px);}
 #np:hover,#nn:hover{transform:translateY(-50%) scale(1.1);}
 #np:disabled,#nn:disabled{opacity:0.25;cursor:default;}
-#hint{position:fixed;top:8px;right:14px;font-family:'Cinzel',serif;font-size:clamp(8px,0.75vw,10px);letter-spacing:0.1em;color:#C8913A;opacity:0.5;z-index:200;}
+#hint{position:fixed;bottom:14px;right:14px;font-family:'Cinzel',serif;font-size:clamp(8px,0.75vw,10px);letter-spacing:0.1em;color:#C8913A;opacity:0.5;z-index:200;}
 
 /* spacing */
 .mb4{margin-bottom:clamp(4px,0.5vh,8px);}
@@ -233,21 +242,21 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a0d00;}
     </div>
     <!-- Note appears right under the header, above the grid -->
     <div class="trade-note" style="margin-bottom:clamp(8px,1vh,14px);margin-top:clamp(6px,0.8vh,12px);">
-      ✨ Any Sims 4 career works — these are just inspiration! Choose your own trade name and make it yours.
+      Any Sims 4 career works — these are just inspiration! Choose your own trade name and make it yours.
     </div>
     <div class="trade-grid">
-      <div class="tc"><div class="tc-n">The Bakers</div><div class="tc-c">Culinary · Chef</div><div class="tc-f">The baking dynasty 🍞</div></div>
-      <div class="tc"><div class="tc-n">The Painters</div><div class="tc-c">Painter · Master of the Real</div><div class="tc-f">The artist dynasty 🎨</div></div>
-      <div class="tc"><div class="tc-n">The Scribes</div><div class="tc-c">Writer · Author</div><div class="tc-f">The storytelling dynasty 📖</div></div>
-      <div class="tc"><div class="tc-n">The Fishers</div><div class="tc-c">Fisherman · Island Living</div><div class="tc-f">The coastal dynasty 🎣</div></div>
-      <div class="tc"><div class="tc-n">The Gardeners</div><div class="tc-c">Gardener · Botanist</div><div class="tc-f">The botanical dynasty 🌿</div></div>
-      <div class="tc"><div class="tc-n">The Nobles</div><div class="tc-c">Noble · Royalty &amp; Legacy</div><div class="tc-f">The aristocratic dynasty 👑</div></div>
-      <div class="tc"><div class="tc-n">The Lawsons</div><div class="tc-c">Law · Judge or Attorney</div><div class="tc-f">The legal dynasty ⚖️</div></div>
-      <div class="tc"><div class="tc-n">The Greenes</div><div class="tc-c">Conservationist · Eco Lifestyle</div><div class="tc-f">The environmental dynasty 🌍</div></div>
-      <div class="tc"><div class="tc-n">The Hartleys</div><div class="tc-c">Doctor · Get To Work</div><div class="tc-f">The healing dynasty 🏥</div></div>
-      <div class="tc"><div class="tc-n">The Sterlings</div><div class="tc-c">Business · Investor</div><div class="tc-f">The merchant dynasty 💼</div></div>
-      <div class="tc"><div class="tc-n">The Reeves</div><div class="tc-c">Politician · City Living</div><div class="tc-f">The civic dynasty 🏛️</div></div>
-      <div class="tc"><div class="tc-n">The Mercers</div><div class="tc-c">Style Influencer · Stylist</div><div class="tc-f">The fashion dynasty ✂️</div></div>
+      <div class="tc"><div class="tc-icon"><i class="ti ti-chef-hat"></i></div><div class="tc-n">The Bakers</div><div class="tc-c">Culinary · Chef</div><div class="tc-f">The baking dynasty</div></div>
+      <div class="tc"><div class="tc-icon"><i class="ti ti-palette"></i></div><div class="tc-n">The Painters</div><div class="tc-c">Painter · Master of the Real</div><div class="tc-f">The artist dynasty</div></div>
+      <div class="tc"><div class="tc-icon"><i class="ti ti-feather"></i></div><div class="tc-n">The Scribes</div><div class="tc-c">Writer · Author</div><div class="tc-f">The storytelling dynasty</div></div>
+      <div class="tc"><div class="tc-icon"><i class="ti ti-fish"></i></div><div class="tc-n">The Fishers</div><div class="tc-c">Fisherman · Island Living</div><div class="tc-f">The coastal dynasty</div></div>
+      <div class="tc"><div class="tc-icon"><i class="ti ti-plant-2"></i></div><div class="tc-n">The Gardeners</div><div class="tc-c">Gardener · Botanist</div><div class="tc-f">The botanical dynasty</div></div>
+      <div class="tc"><div class="tc-icon"><i class="ti ti-crown"></i></div><div class="tc-n">The Nobles</div><div class="tc-c">Noble · Royalty &amp; Legacy</div><div class="tc-f">The aristocratic dynasty</div></div>
+      <div class="tc"><div class="tc-icon"><i class="ti ti-scale"></i></div><div class="tc-n">The Lawsons</div><div class="tc-c">Law · Judge or Attorney</div><div class="tc-f">The legal dynasty</div></div>
+      <div class="tc"><div class="tc-icon"><i class="ti ti-leaf"></i></div><div class="tc-n">The Greenes</div><div class="tc-c">Conservationist · Eco Lifestyle</div><div class="tc-f">The environmental dynasty</div></div>
+      <div class="tc"><div class="tc-icon"><i class="ti ti-stethoscope"></i></div><div class="tc-n">The Hartleys</div><div class="tc-c">Doctor · Get To Work</div><div class="tc-f">The healing dynasty</div></div>
+      <div class="tc"><div class="tc-icon"><i class="ti ti-briefcase"></i></div><div class="tc-n">The Sterlings</div><div class="tc-c">Business · Investor</div><div class="tc-f">The merchant dynasty</div></div>
+      <div class="tc"><div class="tc-icon"><i class="ti ti-building-arch"></i></div><div class="tc-n">The Reeves</div><div class="tc-c">Politician · City Living</div><div class="tc-f">The civic dynasty</div></div>
+      <div class="tc"><div class="tc-icon"><i class="ti ti-needle-thread"></i></div><div class="tc-n">The Mercers</div><div class="tc-c">Style Influencer · Stylist</div><div class="tc-f">The fashion dynasty</div></div>
     </div>
   </div>
   <div class="ft"><span>THE OFFICIAL CHALLENGE OF THE LEGACY CHALLENGE ALMANAC</span></div>
@@ -264,7 +273,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a0d00;}
     </div>
     <div class="rules-grid">
       <div class="rc rc-r1">
-        <div class="rc-emoji">🍞🎨🔨</div>
+        <div class="rc-emoji"><i class="ti ti-chef-hat"></i><i class="ti ti-palette"></i><i class="ti ti-hammer"></i></div>
         <div class="rc-content">
           <div class="r-label">Rule I</div>
           <div class="r-title">The Family Name</div>
@@ -272,7 +281,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a0d00;}
         </div>
       </div>
       <div class="rc rc-r2">
-        <div class="rc-emoji">🏪👩‍🍳🛠️</div>
+        <div class="rc-emoji"><i class="ti ti-building-store"></i><i class="ti ti-chef-hat"></i><i class="ti ti-tools"></i></div>
         <div class="rc-content">
           <div class="r-label">Rule II</div>
           <div class="r-title">The Family Trade</div>
@@ -280,7 +289,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a0d00;}
         </div>
       </div>
       <div class="rc rc-r3">
-        <div class="rc-emoji">⭐👶🌱</div>
+        <div class="rc-emoji"><i class="ti ti-star"></i><i class="ti ti-baby-carriage"></i><i class="ti ti-plant-2"></i></div>
         <div class="rc-content">
           <div class="r-label">Rule III</div>
           <div class="r-title">The Trade Heir Rule</div>
@@ -288,7 +297,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a0d00;}
         </div>
       </div>
       <div class="rc rc-r4">
-        <div class="rc-emoji">🏡🌳🏗️</div>
+        <div class="rc-emoji"><i class="ti ti-home"></i><i class="ti ti-tree"></i><i class="ti ti-building"></i></div>
         <div class="rc-content">
           <div class="r-label">Rule IV</div>
           <div class="r-title">The Family Home</div>
@@ -296,7 +305,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a0d00;}
         </div>
       </div>
       <div class="rc rc-r5 full">
-        <div class="rc-emoji">💎📔🏺</div>
+        <div class="rc-emoji"><i class="ti ti-diamond"></i><i class="ti ti-notebook"></i><i class="ti ti-jar"></i></div>
         <div class="rc-content">
           <div class="r-label">Rule V</div>
           <div class="r-title">The Heirloom Rule</div>
@@ -320,9 +329,9 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a0d00;}
         <div class="trad-row"><div class="trad-icon"><i class="ti ti-photo"></i></div><div class="trad-text"><strong>Annual Family Portrait</strong> — Photo + painted heir portrait every in-game year</div></div>
         <div class="trad-row"><div class="trad-icon"><i class="ti ti-candle"></i></div><div class="trad-text"><strong>Remembrance Day</strong> — Visit all family graves once per in-game year</div></div>
         <div class="trad-row"><div class="trad-icon"><i class="ti ti-confetti"></i></div><div class="trad-text"><strong>Celebrations</strong> — All birthdays, holidays &amp; funerals with family present</div></div>
-        <div class="trad-row"><div class="trad-icon"><i class="ti ti-mail"></i></div><div class="trad-text"><strong>Letter to the Next Heir</strong> — Written before each elder passes</div></div>
+        <div class="trad-row"><div class="trad-icon"><i class="ti ti-notebook"></i></div><div class="trad-text"><strong>The Family Journal</strong> — Written each in-game week, passed to the next heir</div></div>
         <div class="trad-row"><div class="trad-icon" style="color:#C8913A;"><i class="ti ti-sparkles"></i></div><div class="trad-text"><strong>Your Family Tradition</strong> — Player-chosen. Roll the generator in the Almanac!</div></div>
-        <div class="acta mt-auto">📖 Keep the Family Chronicle in the Legacy Challenge Almanac</div>
+        <div class="acta mt-auto"><i class="ti ti-book" style="margin-right:5px;"></i>Keep the Family Chronicle in the Legacy Challenge Almanac</div>
       </div>
       <div class="col-div"></div>
       <div class="flex-col">
@@ -330,7 +339,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a0d00;}
         <div class="col-sub">Your legacy made physical.</div>
         <div class="mus-box mp1">
           <div class="mus-header">
-            <div class="mus-emoji">🏛️</div>
+            <div class="mus-emoji"><i class="ti ti-building-monument" style="font-size:clamp(28px,3.2vw,42px);color:#C8913A;"></i></div>
             <div class="mus-title-block">
               <div class="mus-phase">GENERATIONS 1–3</div>
               <div class="mus-title">The Heritage Room</div>
@@ -340,7 +349,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a0d00;}
         </div>
         <div class="mus-box mp2">
           <div class="mus-header">
-            <div class="mus-emoji">🏦</div>
+            <div class="mus-emoji"><i class="ti ti-building-bank" style="font-size:clamp(28px,3.2vw,42px);color:#C8913A;"></i></div>
             <div class="mus-title-block">
               <div class="mus-phase">GENERATIONS 4–5</div>
               <div class="mus-title">The Family Museum</div>
@@ -348,7 +357,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a0d00;}
           </div>
           <div class="mus-desc">Expands to a full community lot open to the neighbourhood. Houses every heir portrait, all heirlooms, family journals, the Family Chronicle, and all dynasty achievements.</div>
         </div>
-        <div class="acta mt-auto">Track every heirloom, portrait &amp; tradition<br>in the Legacy Challenge Almanac 📖</div>
+        <div class="acta mt-auto">Track every heirloom, portrait &amp; tradition<br>in the Legacy Challenge Almanac</div>
       </div>
     </div>
   </div>
@@ -441,14 +450,18 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a0d00;}
         </div>
         <div class="bn gd">Family<br>Business</div><div class="bt bt-patron">Patron</div>
       </div>
-      <div class="bi">
-        <div class="sw" style="width:clamp(84px,9.5vw,114px);height:clamp(96px,11vw,132px);">
+    </div>
+    <!-- Dynasty Royale — centred below, stands alone as the ultimate badge -->
+    <div style="display:flex;justify-content:center;margin-top:clamp(10px,1.4vh,18px);">
+      <div class="bi" style="position:relative;align-items:center;">
+        <div style="position:absolute;inset:-16px;border-radius:50%;background:radial-gradient(circle,rgba(255,215,0,0.4) 0%,rgba(255,215,0,0.15) 45%,transparent 70%);pointer-events:none;animation:royale-glow 2.4s ease-in-out infinite;"></div>
+        <div class="sw" style="width:clamp(108px,12.5vw,150px);height:clamp(124px,14.4vw,172px);filter:drop-shadow(0 0 10px rgba(255,215,0,0.7)) drop-shadow(0 0 24px rgba(255,180,0,0.35));">
           <div class="sbg" style="background:#FFD700;"></div>
-          <div class="sfi" style="background:#FFF8D6;"><i class="ti ti-crown" style="font-size:clamp(26px,3vw,38px);color:#5a3500;"></i></div>
+          <div class="sfi" style="background:#FFF8D6;"><i class="ti ti-crown" style="font-size:clamp(34px,4vw,52px);color:#5a3500;"></i></div>
         </div>
-        <div class="bn gd" style="font-size:clamp(10px,1vw,13px);">Dynasty Royale</div>
-        <div class="bt bt-patron">All badges earned</div>
-        <div class="ptag">Ultimate achievement</div>
+        <div class="bn gd" style="font-size:clamp(12px,1.2vw,15px);text-align:center;">Dynasty Royale</div>
+        <div class="bt bt-patron" style="text-align:center;">All badges earned</div>
+        <div class="ptag" style="font-size:clamp(10px,1vw,13px);padding:3px 12px;text-align:center;">✦ Ultimate achievement ✦</div>
       </div>
     </div>
   </div>
@@ -462,10 +475,10 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a0d00;}
     <span class="stag" style="color:#C8913A;">THE HERITAGE LEGACY</span>
     <div class="two-col mt8">
       <div class="pat-l">
-        <div class="label mb8" style="font-size:clamp(10px,1vw,13px);">Want more Heritage?</div>
+        <div class="label mb8" style="font-size:clamp(10px,1vw,13px);text-align:center;">Want more Heritage?</div>
         <div class="display d-lg d-cream mb8">The Patron<br>Edition</div>
         <div class="dg" style="width:55%;margin-bottom:clamp(12px,1.8vh,22px);"></div>
-        <div class="tagline" style="text-align:left;font-size:clamp(14px,1.5vw,20px);margin-bottom:clamp(14px,2vh,26px);">Ten generations. A grander museum.<br>A portrait wall that spans a century.</div>
+        <div class="tagline" style="text-align:center;font-size:clamp(14px,1.5vw,20px);margin-bottom:clamp(14px,2vh,26px);padding:0 clamp(40px,5vw,70px);">Ten generations. A grander museum.<br>A portrait wall that spans a century.</div>
         <div class="price-box">
           <div class="label mb6" style="font-size:clamp(9px,0.9vw,12px);">One-time purchase</div>
           <div class="price-amt">~$6 AUD</div>
